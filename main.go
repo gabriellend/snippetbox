@@ -21,17 +21,18 @@ func home(w http.ResponseWriter, r *http.Request) {
 
 // Add a showSnippet handler function.
 func showSnippet(w http.ResponseWriter, r *http.Request) {
-	fmt.Println("testinnngg")
-
+	//fmt.Printf("%v\n", r.URL.Query())
 	// Extract the value of the id parameter from the query string and try to
 	// convert it to an integer using the strconv.Atoi() function. If it can't
-	// be converted to an integer, or the value is less than 1, we return a 404 page // not found response.
+	// be converted to an integer, or the value is less than 1, we return a 404 page
+	// not found response.
 	id, err := strconv.Atoi(r.URL.Query().Get("id"))
 	if err != nil || id < 1 {
 		http.NotFound(w, r)
 		return
 	}
-	// Use the fmt.Fprintf() function to interpolate the id value with our response // and write it to the http.ResponseWriter.
+	// Use the fmt.Fprintf() function to interpolate the id value with our response
+	// and write it to the http.ResponseWriter.
 	fmt.Fprintf(w, "Display a specific snippet with ID %d...", id)
 	// w.Write([]byte("Display a specific snippet..."))
 }
@@ -69,7 +70,7 @@ func main() {
 	// register the home function as the handler for the "/" URL pattern.
 	mux := http.NewServeMux()
 	mux.HandleFunc("/", home)
-	mux.HandleFunc("/snippet?id=1", showSnippet)
+	mux.HandleFunc("/snippet", showSnippet)
 	mux.HandleFunc("/snippet/create", createSnippet)
 
 	// Use the http.ListenAndServe() function to start a new web server. We pass in
